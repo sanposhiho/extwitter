@@ -51,8 +51,15 @@ defmodule ExTwitter.API.Users do
 
   def user(user_id, options) when is_list(options) do
     params = ExTwitter.Parser.parse_request_params(parse_user_id_param(user_id) ++ options)
-    request(:get, "1.1/users/show.json", params)
-    |> ExTwitter.Parser.parse_user
+    try do
+      user =
+        request(:get, "1.1/users/show.json", params)
+        |> ExTwitter.Parser.parse_user
+      {:ok, user}
+    rescue
+      ExTwitter.ConnectionError -> {:error, :connection_error}
+      _ -> {:error, :unknown}
+    end
   end
 
   defp parse_user_id_param(user_id) when is_integer(user_id) do

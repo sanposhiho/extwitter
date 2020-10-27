@@ -79,8 +79,8 @@ defmodule ExTwitter.Behaviour do
               ExTwitter.Model.User.t()
             ]
   @callback user_profile_banner(String.t() | integer()) :: ExTwitter.Model.ProfileBanner.t()
-  @callback user(String.t() | integer()) :: ExTwitter.Model.User.t()
-  @callback user(String.t() | integer(), Keyword.t()) :: ExTwitter.Model.User.t()
+  @callback user(String.t() | integer()) :: {:ok, ExTwitter.Model.User.t()} :: {:error, atom()}
+  @callback user(String.t() | integer(), Keyword.t()) :: {:ok, ExTwitter.Model.User.t()} :: {:error, atom()}
   @callback user_search(String.t()) :: [ExTwitter.Model.User.t()]
   @callback user_search(String.t(), Keyword.t()) :: [ExTwitter.Model.User.t()]
   @callback favorites :: [ExTwitter.Model.Tweet.t()]
